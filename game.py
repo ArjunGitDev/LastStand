@@ -7,6 +7,14 @@ class Game:
         self.bounds = screen.get_rect()
         self.running = True
 
+        self.wall_thickness = 20
+        self.walls = [
+            pygame.Rect(0, 0, self.bounds.width, self.wall_thickness),
+            pygame.Rect(0, self.bounds.height - self.wall_thickness, self.bounds.width, self.wall_thickness),
+            pygame.Rect(0, 0, self.wall_thickness, self.bounds.height),
+            pygame.Rect(self.bounds.width - self.wall_thickness, 0, self.wall_thickness, self.bounds.height),
+        ]
+
         self.player = Player(self.bounds.centerx, self.bounds.centery)
 
         self.all_sprites = pygame.sprite.Group()
@@ -18,8 +26,10 @@ class Game:
                 self.running = False
 
     def update(self, dt):
-        self.player.update_movement(dt, self.bounds.width, self.bounds.height)
+        self.player.update_movement(dt, self.walls)
 
     def draw(self):
         self.screen.fill((237, 232, 208))
+        for wall in self.walls:
+            pygame.draw.rect(self.screen, (0, 0, 0), wall)
         self.all_sprites.draw(self.screen)

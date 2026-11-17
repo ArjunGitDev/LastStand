@@ -2,8 +2,8 @@ import sys
 import pygame
 from game import Game
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1080
+SCREEN_HEIGHT = 1080
 FPS = 60
 
 def main():
@@ -16,7 +16,7 @@ def main():
     game = Game(screen)
 
     while game.running:
-        dt = clock.tick(FPS) / 1000.0
+        dt = min(clock.tick(FPS) / 1000.0, 0.05)
 
         game.handle_events()
         game.update(dt)

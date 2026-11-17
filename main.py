@@ -1,28 +1,31 @@
+import sys
 import pygame
 from game import Game
-import sys
-
-pygame.init()
-pygame.display.set_caption("Last Stand")
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-screen.fill((237, 232, 208))
+FPS = 60
 
-clock = pygame.time.Clock()
-game = Game(screen)
+def main():
+    pygame.init()
+    pygame.display.set_caption("Last Stand")
 
-running = True
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-while running:
-    dt = clock.tick(60) / 1000.0
+    clock = pygame.time.Clock()
+    game = Game(screen)
 
-    game.handle_events()
-    game.update_movement(dt)
-    pygame.display.flip()
+    while game.running:
+        dt = clock.tick(FPS) / 1000.0
 
-pygame.quit()
-sys.exit()
+        game.handle_events()
+        game.update(dt)
+        game.draw()
 
+        pygame.display.flip()
 
+    pygame.quit()
+    sys.exit()
+
+if __name__ == "__main__":
+    main()
